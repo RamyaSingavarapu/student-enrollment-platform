@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thymeleaf demo home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/styles/index.css}" rel="stylesheet" />
+</head>
+<body>
+<h1 th:text="|Student list:|" />
+<ul th:each="student: ${students}">
+    <li>LastName: <span th:text="${student.lastName}"/></li>
+    <li>RollNum: <span th:text="${student.rollNumber}"/></li>
+    <li>Details: <a th:href="@{/student/{id}(id=${student.id})}">link</a></li>
+</ul>
+<a th:href="@{/create-student}">Create Student</a>
+</body>
+</html>

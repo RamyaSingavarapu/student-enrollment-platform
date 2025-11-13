@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thymeleaf demo home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/styles/index.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:unless="${noStudentPresent}">
+    <h1 th:text="|${student.lastName} is sucessfully deleted|" />
+</div>
+<div th:if="${noStudentPresent}">
+    <h1 th:text="|No Student with id: ${student.id} is present|"/>
+</div>
+<a th:href="@{/student-list}">Back to Student List</a>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thymeleaf demo home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/styles/index.css}" rel="stylesheet" />
+</head>
+<body>
+<h1 th:text="|${student.lastName} - ${student.rollNumber} Details|" />
+<div th:object="${student}">
+    <div>
+        <span>Id: </span>
+        <span th:text="*{id}" />
+    </div>
+    <div>
+        <span>First name: </span>
+        <span th:text="*{firstName}" />
+    </div>
+    <div>
+        <span>Last name: </span>
+        <span th:text="*{lastName}" />
+    </div>
+    <div>
+        <span>Roll number: </span>
+        <span th:text="*{rollNumber}" />
+    </div>
+    <div>
+        <span>Department: </span>
+        <span th:text="*{department}" />
+    </div>
+        <form th:action="@{/student/{id}(id=${student.id})}" method="post">
+            <div>
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit">Delete</button>
+            </div>
+        </form>
+</div>
+<div><a th:href="@{/student-list}">Show list of all students</a></div>
+<div><a th:href="@{/students/edit/{id}(id=${student.id})}">Edit Student</a></div>
+
+</body>
+</html>
