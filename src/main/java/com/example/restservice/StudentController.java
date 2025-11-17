@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -48,7 +51,9 @@ public class StudentController {
 
     @GetMapping("/student-list")
     public String displayStudentList(Model model){
-      List<Student> students = studentRepository.findAll();
+      Pageable pageable = PageRequest.of(0,5);
+      Page<Student> studentsPage = studentRepository.findAll(pageable);
+      List<Student> students = studentsPage.toList();
       model.addAttribute("students", students);
       return "student-list";
     }
