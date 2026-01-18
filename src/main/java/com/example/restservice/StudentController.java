@@ -17,7 +17,7 @@ import org.springframework.ui.Model;
 @Controller
 public class StudentController {
 
-    @Autowired
+    @Autowired // Springboot creates an class that implements StudentRepository interface, instantiates it and assigns its reference to the field below
     private StudentRepository studentRepository;
 
     @GetMapping("/create-student")
@@ -30,58 +30,60 @@ public class StudentController {
     }
 
     @PostMapping("create-student")
-    public String createStudent(@ModelAttribute Student student, Model model) {
+    public String createStudent(@ModelAttribute Student student) {//@ModelAttribute we are saying to springboot that creates an object with the details(student i.e as keyvalue pairs with &) that came from browser and save reference in a variable(student) 
         Student savedStudent = studentRepository.save(student);
 
-        return "redirect:/student/"+savedStudent.getId();
+        return "redirect:/student/" + savedStudent.getId();
     }
 
     @GetMapping("/student/{id}")
-    public String getStudentById(@PathVariable String id, Model model){
+    public String getStudentById(@PathVariable String id, Model model) {//@PathVariable means we are requesting springboot to pass the id that is in the path to this method
         Optional<Student> mayBeStudent = studentRepository.findById(id);
 
+        // if (mayBeStudent.isPresent()) {
+        //     Student student = mayBeStudent.get();
+        // }
         mayBeStudent.ifPresent(student -> model.addAttribute("student", student));
 
         Boolean noStudentPresent = mayBeStudent.isEmpty();
 
-        model.addAttribute("noStudentPresent", noStudentPresent );
+        model.addAttribute("noStudentPresent", noStudentPresent);
 
         return "student-details";
     }
 
     @GetMapping("/student-list")
-    public String displayStudentList(Model model){
-      Pageable pageable = PageRequest.of(0,5);
-      Page<Student> studentsPage = studentRepository.findAll(pageable);
-      List<Student> students = studentsPage.toList();
-      model.addAttribute("students", students);
-      return "student-list";
+    public String displayStudentList(Model model) {
+        Pageable pageable = PageRequest.of(0, 5);
+        Page<Student> studentsPage = studentRepository.findAll(pageable);
+        List<Student> students = studentsPage.toList();
+        model.addAttribute("students", students);
+        return "student-list";
     }
 
     @DeleteMapping("/student/{id}")
-    public String deleteStudentById(@PathVariable String id, Model model){
-       Optional<Student> mayBeStudent = studentRepository.findById(id);
+    public String deleteStudentById(@PathVariable String id, Model model) {
+        Optional<Student> mayBeStudent = studentRepository.findById(id);
         mayBeStudent.ifPresent(student -> model.addAttribute("student", student));
-        mayBeStudent.ifPresent(student-> studentRepository.delete(student));
+        mayBeStudent.ifPresent(student -> studentRepository.delete(student));
         Boolean noStudentPresent = mayBeStudent.isEmpty();
         model.addAttribute("noStudentPresent", noStudentPresent);
         return "delete-student";
     }
 
     @GetMapping("/students/edit/{id}")
-    public String showEditForm(@PathVariable String id, Model model){
+    public String showEditForm(@PathVariable String id, Model model) {
         Optional<Student> mayBeStudent = studentRepository.findById(id);
-        mayBeStudent.ifPresent(student->model.addAttribute("student", student));
+        mayBeStudent.ifPresent(student -> model.addAttribute("student", student));
         return "edit-student";
     }
 
     @PutMapping("/students/{id}")
     public String updateStudentById(@PathVariable String id,
-                                    @ModelAttribute Student student){
-       studentRepository.save(student);
+            @ModelAttribute Student student) {
+        studentRepository.save(student);
 
         return "redirect:/student-list";
     }
-
 
 }

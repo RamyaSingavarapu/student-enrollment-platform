@@ -9,11 +9,13 @@
 <body>
 <h1 th:text="|Student list|" />
 <a th:href="@{/create-student}">Create Student</a>
-<ul th:each="student: ${students}">
-    <li>LastName: <span th:text="${student.lastName}"/></li>
-    <li>RollNum: <span th:text="${student.rollNumber}"/></li>
-    <li>Details: <a th:href="@{/student/{id}(id=${student.id})}">link</a></li>
-</ul>
+<div id="listOfStudents">
+    <ul th:each="student: ${students}">
+        <li>LastName: <span th:text="${student.lastName}"/></li>
+        <li>RollNum: <span th:text="${student.rollNumber}"/></li>
+        <li>Details: <a th:href="@{/student/{id}(id=${student.id})}">link</a></li>
+    </ul>
+</div>
 <button id="showMore">Show More</button>
 </body>
 </html>
