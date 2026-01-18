@@ -30,7 +30,7 @@ public class StudentController {
     }
 
     @PostMapping("create-student")
-    public String createStudent(@ModelAttribute Student student) {//@ModelAttribute we are saying to springboot that creates an object with the details(student i.e as keyvalue pairs with &) that came from browser and save reference in a variable(student) 
+    public String createStudent(@ModelAttribute Student student) {//@ModelAttribute we are asking springboot to create an object with the details(student i.e as keyvalue pairs with &) that came from browser and save reference in a variable(student) 
         Student savedStudent = studentRepository.save(student);
 
         return "redirect:/student/" + savedStudent.getId();
@@ -66,8 +66,8 @@ public class StudentController {
         Optional<Student> mayBeStudent = studentRepository.findById(id);
         mayBeStudent.ifPresent(student -> model.addAttribute("student", student));
         mayBeStudent.ifPresent(student -> studentRepository.delete(student));
-        Boolean noStudentPresent = mayBeStudent.isEmpty();
-        model.addAttribute("noStudentPresent", noStudentPresent);
+        Boolean studentPresent = mayBeStudent.isPresent();
+        model.addAttribute("studentPresent", studentPresent);
         return "delete-student";
     }
 

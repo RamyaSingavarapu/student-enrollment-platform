@@ -6,10 +6,10 @@
     <link th:href="@{/styles/index.css}" rel="stylesheet" />
 </head>
 <body>
-<div th:unless="${noStudentPresent}">
+<div th:if="${studentPresent}">
     <h1 th:text="|${student.lastName} is sucessfully deleted|" />
 </div>
-<div th:if="${noStudentPresent}">
+<div th:unless="${studentPresent}">
     <h1 th:text="|No Student with id: ${student.id} is present|"/>
 </div>
 <a th:href="@{/student-list}">Back to Student List</a>

@@ -13,15 +13,15 @@ import java.util.List;
 @RestController
 public class StudentDataController {
 
-  @Autowired
-  private StudentRepository studentRepository;
+    @Autowired
+    private StudentRepository studentRepository;
 
-  @GetMapping("/students")
-  public StudentData getStudentData(@RequestParam int pageNumber) {
-    Pageable pageable = PageRequest.of(pageNumber, 5);
-    Page<Student> studentsPage = studentRepository.findAll(pageable);
-    boolean hasMore = studentsPage.hasNext();
-    List<Student> studentList = studentsPage.toList();
-    return new StudentData(studentList,hasMore);
-  }
+    @GetMapping("/students")
+    public StudentData getStudentData(@RequestParam int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 5);
+        Page<Student> studentsPage = studentRepository.findAll(pageable); // Page<Student> has list of students and boolean value (which shows if there are more items)
+        boolean hasMore = studentsPage.hasNext();
+        List<Student> studentList = studentsPage.toList();
+        return new StudentData(studentList, hasMore);
+    }
 }
