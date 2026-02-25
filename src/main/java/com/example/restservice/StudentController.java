@@ -20,6 +20,9 @@ public class StudentController {
     @Autowired // Springboot creates an class that implements StudentRepository interface, instantiates it and assigns its reference to the field below
     private StudentRepository studentRepository;
 
+    // public StudentController(StudentRepository studentRepository) {
+    //     this.studentRepository = studentRepository;
+    // }
     @GetMapping("/create-student")
     public String createStudent(Model model) {
         Student student = new Student("", "", "", "");

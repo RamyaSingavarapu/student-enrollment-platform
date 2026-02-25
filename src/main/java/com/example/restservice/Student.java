@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "students") //@Document means this is a document that must be saved in mongodb
-public class Student {
+public class Student { //it is an entity/model class
 
     @Id
     private String id;
